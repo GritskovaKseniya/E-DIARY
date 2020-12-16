@@ -6,8 +6,8 @@ from app1.models import *
 
 def get_progress_table(user,user_class):
 
-    #lessons=Lessons.objects.all()
-    lessons = OneLesson.objects.filter(a_class=user_class)
+    lessons1=Lessons.objects.all()
+    lessons = OneLesson.objects.all()
     mygrade = Grade.objects.filter(student=user)
     grade = Grade.objects.all()
 
@@ -46,7 +46,7 @@ def get_progress_table(user,user_class):
 
     a=[]
 
-    for lesson in lessons:
+    for lesson in  lessons:
         list=[]
 
         #1 добавляем в лист урок
@@ -54,11 +54,11 @@ def get_progress_table(user,user_class):
 
         #2 добавляем в лист моё за месяц
         #date(datetime.now().year,datetime.now().month, 1)<=grade_date<=date(datetime.now().year,datetime.now().month, calendar.monthrange(datetime.now().year, datetime.now().month)[1])
-        mygrade.filter(grade_date__gte=date(datetime.now().year,datetime.now().month, 1)).filter(grade_date__lte=date(datetime.now().year,datetime.now().month, calendar.monthrange(datetime.now().year, datetime.now().month)[1])).filter(lesson=lesson)
+        mygrade2=mygrade.filter(grade_date__gte=date(datetime.now().year,datetime.now().month, 1)).filter(grade_date__lte=date(datetime.now().year,datetime.now().month, calendar.monthrange(datetime.now().year, datetime.now().month)[1])).filter(lesson=lesson)
         t=0
         z=0
         #2
-        for mygr in mygrade:
+        for mygr in mygrade2:
             t=t+mygr.grade
             z=z+1
         if (z != 0):
@@ -67,11 +67,11 @@ def get_progress_table(user,user_class):
             list.append("-")
 
         #3 добавляем в лист всех за месяц
-        grade.filter(grade_date__gte=date(datetime.now().year, datetime.now().month, 1)).filter(grade_date__lte=date(datetime.now().year, datetime.now().month,calendar.monthrange(datetime.now().year, datetime.now().month)[1])).filter(lesson=lesson)
+        grade3=grade.filter(grade_date__gte=date(datetime.now().year, datetime.now().month, 1)).filter(grade_date__lte=date(datetime.now().year, datetime.now().month,calendar.monthrange(datetime.now().year, datetime.now().month)[1])).filter(lesson=lesson)
         t = 0
         z = 0
         # 2
-        for gr in grade:
+        for gr in grade3:
             t = t + gr.grade
             z = z + 1
         if(z!=0):
@@ -83,13 +83,13 @@ def get_progress_table(user,user_class):
 
         #4 добавляем в лист себя за 1 четверть
         if datetime.now().month>=9:
-            mygrade.filter(grade_date__gte=d1).filter(grade_date__lte=d2).filter(lesson=lesson)
+            mygrade4=mygrade.filter(grade_date__gte=d1).filter(grade_date__lte=d2).filter(lesson=lesson)
         if datetime.now().month <= 9:
-            mygrade.filter(grade_date__gte=d5).filter(grade_date__lte=d6).filter(lesson=lesson)
+            mygrade4=mygrade.filter(grade_date__gte=d5).filter(grade_date__lte=d6).filter(lesson=lesson)
         t = 0
         z = 0
         # 2
-        for mygr in mygrade:
+        for mygr in mygrade4:
             t = t + mygr.grade
             z = z + 1
         if (z != 0):
@@ -99,15 +99,15 @@ def get_progress_table(user,user_class):
 
         # 5 добавляем в лист всех за 1 четверть
         if datetime.now().month >= 9:
-            grade.filter(grade_date__gte=d1).filter(grade_date__lte=d2).filter(lesson=lesson)
+            grade5=grade.filter(grade_date__gte=d1).filter(grade_date__lte=d2).filter(lesson=lesson)
         if  datetime.now().month <=9:
-            grade.filter(grade_date__gte=d5).filter(grade_date__lte=d6).filter(lesson=lesson)
+            grade5=grade.filter(grade_date__gte=d5).filter(grade_date__lte=d6).filter(lesson=lesson)
 
 
         t = 0
         z = 0
         # 2
-        for gr in grade:
+        for gr in grade5:
             t = t + gr.grade
             z = z + 1
         if (z != 0):
@@ -117,14 +117,14 @@ def get_progress_table(user,user_class):
 
         # 6 добавляем в лист себя за 2 четверть
         if datetime.now().month >= 9:
-            mygrade.filter(grade_date__gte=d3).filter(grade_date__lte=d4).filter(lesson=lesson)
+            mygrade6=mygrade.filter(grade_date__gte=d3).filter(grade_date__lte=d4).filter(lesson=lesson)
         if datetime.now().month <= 9:
-            mygrade.filter(grade_date__gte=d7).filter(grade_date__lte=d8).filter(lesson=lesson)
+            mygrade6=mygrade.filter(grade_date__gte=d7).filter(grade_date__lte=d8).filter(lesson=lesson)
 
         t = 0
         z = 0
         # 2
-        for mygr in mygrade:
+        for mygr in mygrade6:
             t = t + mygr.grade
             z = z + 1
         if (z != 0):
@@ -134,14 +134,14 @@ def get_progress_table(user,user_class):
 
         # 7 добавляем в лист всех за 2 четверть
         if datetime.now().month >= 9:
-            grade.filter(grade_date__gte=d3).filter(grade_date__lte=d4).filter(lesson=lesson)
+            grade7=grade.filter(grade_date__gte=d3).filter(grade_date__lte=d4).filter(lesson=lesson)
         if datetime.now().month <= 9:
-            grade.filter(grade_date__gte=d7).filter(grade_date__lte=d8).filter(lesson=lesson)
+            grade7=grade.filter(grade_date__gte=d7).filter(grade_date__lte=d8).filter(lesson=lesson)
 
         t = 0
         z = 0
         # 2
-        for gr in grade:
+        for gr in grade7:
             t = t + gr.grade
             z = z + 1
         if (z != 0):
@@ -151,14 +151,14 @@ def get_progress_table(user,user_class):
 
         # 8 добавляем в лист всех за семестр
         if datetime.now().month >= 9:
-            mygrade.filter(grade_date__gte=d11).filter(grade_date__lte=d12).filter(lesson=lesson)
+            mygrade8=mygrade.filter(grade_date__gte=d11).filter(grade_date__lte=d12).filter(lesson=lesson)
         if datetime.now().month <= 9:
-            mygrade.filter(grade_date__gte=d13).filter(grade_date__lte=d14).filter(lesson=lesson)
+            mygrade8=mygrade.filter(grade_date__gte=d13).filter(grade_date__lte=d14).filter(lesson=lesson)
 
         t = 0
         z = 0
         # 2
-        for mygr in mygrade:
+        for mygr in mygrade8:
             t = t + mygr.grade
             z = z + 1
         if (z != 0):
@@ -166,17 +166,18 @@ def get_progress_table(user,user_class):
         if (z == 0):
             list.append("-")
 
+
         #9 добавляем в лист себя за  семестр
 
         if datetime.now().month >= 9:
-            grade.filter(grade_date__gte=d11).filter(grade_date__lte=d12).filter(lesson=lesson)
+            grade9=grade.filter(grade_date__gte=d11).filter(grade_date__lte=d12).filter(lesson=lesson)
         if datetime.now().month <= 9:
-            grade.filter(grade_date__gte=d13).filter(grade_date__lte=d14).filter(lesson=lesson)
+            grade9=grade.filter(grade_date__gte=d13).filter(grade_date__lte=d14).filter(lesson=lesson)
 
         t = 0
         z = 0
         # 2
-        for gr in grade:
+        for gr in grade9:
             t = t + gr.grade
             z = z + 1
         if (z != 0):
