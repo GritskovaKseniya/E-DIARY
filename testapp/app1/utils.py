@@ -227,6 +227,3 @@ def get_date_to_string(date):
     week_days = ['понедельник', 'вторник', 'среду', 'четверг', 'пятница', 'субботу', 'воскресенье']
     return week_days[date.weekday()] + ' ' + date.strftime('%d.%m.%Y')
 
-utils.py.txt
-Отображается файл "views.py.txt"
-
