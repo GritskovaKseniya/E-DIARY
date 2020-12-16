@@ -1,6 +1,6 @@
 .jumbotron {
   border-radius: 0;
-  background-color: rgb(161, 179, 207);
+  background-color: #161b22;
   padding: 0px;
 }
 
@@ -21,27 +21,36 @@
 }
 
 h2{
-  color:white
+  color:#f0f6fc;
   margin-top: 2px;
 }
 .btn{
-    border-radius: 0;
+  border-radius: 0;
 }
 
 .active{
 
 }
 
-body {
+.bg-light{
+  color: #f0f6fc;
   background: #0d1117;
 }
 
-
-.col-sm{
+.btn-outline-dark{
+  color: #f0f6fc;
 }
 
-.nav-link{
-    color:yellow;
+.table{
+  color: #f0f6fc;
+}
+
+body {
+  color: #f0f6fc;
+  background: #0d1117;
+}
+
+.col-sm{
 }
 
 .container-fluid{
