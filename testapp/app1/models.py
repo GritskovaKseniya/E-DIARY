@@ -90,6 +90,7 @@ class TimeSlot(models.Model):
 
     class Meta:
         verbose_name = 'Время урока'
+
         verbose_name_plural = 'Время уроков'
 
 
