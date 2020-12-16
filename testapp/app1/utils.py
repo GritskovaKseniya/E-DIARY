@@ -1,23 +1,3 @@
-
-Перейти к содержимому
-Gmail используется с программой чтения с экрана
-Meet
-Новая встреча
-Перейти на встречу
-Hangouts
-1 из 1 669
-New
-Входящие
-Vladimir Kantcevich <vladimirkantcevich@gmail.com>
-	
-Приложения06:10 (7 минут назад)
-	
-кому: я
-
-4 прикрепленных файла
-	
-	
-
 import datetime as datetime1
 from datetime import datetime, date, time
 import calendar
