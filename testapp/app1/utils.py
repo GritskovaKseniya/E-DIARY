@@ -198,17 +198,18 @@ def get_progress_table(user,user_class):
 
 def get_timetable(date, user_class):
     time_list = OneLesson.objects.filter(date=date).filter(a_class=user_class)
-    lessons_and_time = [{'number': 1, 'time': '09:00-09:45', 'title': '', 'homework': '', 'comment': ''},
-                        {'number': 2, 'time': '10:00-10:45', 'title': '', 'homework': '', 'comment': ''},
-                        {'number': 3, 'time': '11:00-11:45', 'title': '', 'homework': '', 'comment': ''},
-                        {'number': 4, 'time': '12:00-12:45', 'title': '', 'homework': '', 'comment': ''},
-                        {'number': 5, 'time': '13:00-13:45', 'title': '', 'homework': '', 'comment': ''},
-                        {'number': 6, 'time': '14:00-14:45', 'title': '', 'homework': '', 'comment': ''},
-                        {'number': 7, 'time': '15:00-15:45', 'title': '', 'homework': '', 'comment': ''}
+    lessons_and_time = [{'number': 1, 'time': '09:00-09:45', 'title': 'нет урока', 'homework': '', 'comment': ''},
+                        {'number': 2, 'time': '10:00-10:45', 'title': 'нет урока', 'homework': '', 'comment': ''},
+                        {'number': 3, 'time': '11:00-11:45', 'title': 'нет урока', 'homework': '', 'comment': ''},
+                        {'number': 4, 'time': '12:00-12:45', 'title': 'нет урока', 'homework': '', 'comment': ''},
+                        {'number': 5, 'time': '13:00-13:45', 'title': 'нет урока', 'homework': '', 'comment': ''},
+                        {'number': 6, 'time': '14:00-14:45', 'title': 'нет урока', 'homework': '', 'comment': ''},
+                        {'number': 7, 'time': '15:00-15:45', 'title': 'нет урока', 'homework': '', 'comment': ''}
                         ]
     for lesson in time_list:
         one_lesson = list(filter(lambda x: x['time'] == str(lesson.lesson_time), lessons_and_time))[0]
-        one_lesson['title'] = str(lesson)
+        if str(lesson != ''):
+            one_lesson['title'] = str(lesson)
         one_lesson['homework'] = lesson.homework
         one_lesson['comment'] = lesson.comment_teacher
     return lessons_and_time

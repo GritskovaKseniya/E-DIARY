@@ -8,6 +8,18 @@
     font-size: large;
 }
 
+.width-number{
+    width: 20px;
+}
+
+.width-time{
+    width: 120px;
+}
+
+.width-lesson{
+    width: 230px;
+}
+
 h2{
   color:white
   margin-top: 2px;
