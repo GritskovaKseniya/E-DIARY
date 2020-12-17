@@ -131,7 +131,7 @@ def norm_view_for(grade_type):
 class Grade(models.Model):
     # оценка
     student = models.ForeignKey(Students, on_delete=models.PROTECT)
-    lesson = models.ForeignKey(OneLesson, on_delete=models.PROTECT)
+    lesson = models.ForeignKey(Lessons, on_delete=models.PROTECT)
     grade = models.IntegerField(choices=GradeList.choices)
     grade_type = models.IntegerField(choices=GradeType.choices)
     # дата за которую ставится оценка
