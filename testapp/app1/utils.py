@@ -30,7 +30,7 @@ def get_progress_table(user, user_class):
     d14 = date(datetime.now().year, 6, 1)
     # -------------------------------
     a = []
-    for lesson in lessons1:
+    for lesson in lessons:
         list = []
         # 1 добавляем в лист урок
         list.append(lesson)
