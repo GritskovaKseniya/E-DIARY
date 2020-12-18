@@ -200,6 +200,53 @@ def get_timetable_week(date, user_class):
     return result
 
 
+def get_week_with_weekday(date):
+    date_from = date - dt.timedelta(days=date.weekday())
+    date_to = date + dt.timedelta(days=6 - date.weekday())
+    week = []
+    while date_from <= date_to:
+        week.append({'date': get_date_to_string_for_grade(date_from)})
+        date_from += dt.timedelta(days=1)
+    return week
+
+
+def get_week(date):
+    date_from = date - dt.timedelta(days=date.weekday())
+    date_to = date + dt.timedelta(days=6 - date.weekday())
+    week = []
+    while date_from <= date_to:
+        week.append(date_from)
+        date_from += dt.timedelta(days=1)
+    return week
+
+
+def get_date_to_string_for_grade(date):
+    week_days = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']
+    return week_days[date.weekday()] + ' ' + date.strftime('%d.%m.%Y')
+
+
+def get_grades_for_week(lessons, week, user):
+    result = []
+    for lesson in lessons:
+        day_array = []
+        for day in week[:-1]: # итерации с пн по сб
+            lesson_t = OneLesson.objects.filter(lesson__name=lesson['lesson__name']).filter(date=day)
+            grade_array = []
+            for les in lesson_t:
+                grades = Grade.objects.filter(student=user).filter(lesson=les)
+                for grade in grades:
+                    # print('grade', grade)
+                    # print('lesson', lesson)
+                    grade_array.append({'type': grade.grade_type, 'value': grade.grade})
+            day_array.append({'date': day, 'grades': grade_array})
+        result.append({'lesson': lesson['lesson__name'], 'days_and_grades': day_array })
+    return result
+
+
 def get_date_to_string(date):
     week_days = ['понедельник', 'вторник', 'среду', 'четверг', 'пятница', 'субботу', 'воскресенье']
     return week_days[date.weekday()] + ' ' + date.strftime('%d.%m.%Y')
+
+
+def first_and_last_weekday_string(week):
+    return week[0].strftime('%d.%m.%Y')+'-'+week[-1].strftime('%d.%m.%Y')

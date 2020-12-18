@@ -90,7 +90,6 @@ class TimeSlot(models.Model):
 
     class Meta:
         verbose_name = 'Время урока'
-
         verbose_name_plural = 'Время уроков'
 
 
@@ -139,7 +138,7 @@ class Grade(models.Model):
 
     def __str__(self):
         return str(self.student) + ' Оценка: ' + str(self.grade) + ' ' + norm_view_for(self.grade_type) + ' ' + str(
-            self.lesson) + ' ' + str(self.grade_date)
+            self.lesson)
 
     class Meta:
         verbose_name = 'Оценка'

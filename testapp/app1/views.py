@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.db import models
+from datetime import date, datetime
 import datetime
 from app1.models import *
 from django.core.exceptions import ObjectDoesNotExist
-from app1.utils import get_timetable, get_timetable_week, get_date_to_string, get_progress_table
+from app1.utils import *
 
 
 def main(request):
@@ -14,9 +15,9 @@ def main(request):
     user = LogUser.objects.all()[0].key
     user_name = user.name
     user_class = user.user_class
-    date = datetime.date.today()
+    today = date.today()
     return render(request, 'app1/main.html', {'url_name': url_name, 'class': user_class, 'name': user_name,
-                                              'timetable': get_timetable(date, user_class)})
+                                              'timetable': get_timetable(today, user_class)})
 
 
 def homework(request):
@@ -26,12 +27,12 @@ def homework(request):
     user = LogUser.objects.all()[0].key
     user_name = user.name
     user_class = user.user_class
-    date = datetime.date.today()
+    today = date.today()
     if request.GET.get('date') is not None:
-        date = datetime.datetime.strptime(request.GET.get('date'), '%Y-%m-%d')
+        today = datetime.strptime(request.GET.get('date'), '%Y-%m-%d')
     return render(request, 'app1/homework.html', {'url_name': url_name, 'class': user_class, 'name': user_name,
-                                                  'timetable': get_timetable(date, user_class),
-                                                  'date': get_date_to_string(date)})
+                                                  'timetable': get_timetable(today, user_class),
+                                                  'date': get_date_to_string(today)})
 
 
 def timetable(request):
@@ -41,9 +42,9 @@ def timetable(request):
     user = LogUser.objects.all()[0].key
     user_name = user.name
     user_class = user.user_class
-    date = datetime.date.today()
+    today = date.today()
     return render(request, 'app1/timetable.html', {'url_name': url_name, 'class': user_class, 'name': user_name,
-                                                   'timetable': get_timetable_week(date, user_class)})
+                                                   'timetable': get_timetable_week(today, user_class)})
 
 
 def progress_table(request):
@@ -61,12 +62,19 @@ def grade(request):
     if len(LogUser.objects.all()) == 0:
         return redirect('/form')
     url_name = request.resolver_match.url_name
-    # lessons = Lessons.objects.all()
-    # grades = Grade.objects.all()
     user = LogUser.objects.all()[0].key
     user_name = user.name
     user_class = user.user_class
-    return render(request, 'app1/grade.html', {'url_name': url_name, 'class': user_class, 'name': user_name})
+    lessons = OneLesson.objects.filter(a_class=user_class).filter(lesson__is_active=True).values('lesson__name').distinct()
+    today = date.today()
+    week = get_week(today)
+    week_date = get_week_with_weekday(today)
+    if request.GET.get('date') is not None:
+        week = get_week(datetime.strptime(request.GET.get('date'), '%Y-%m-%d'))
+        week_date = get_week_with_weekday(datetime.strptime(request.GET.get('date'), '%Y-%m-%d'))
+    return render(request, 'app1/grade.html', {'url_name': url_name, 'class': user_class, 'name': user_name,
+                                               'week': week_date[:-1], 'grades': get_grades_for_week(lessons, week, user),
+                                               'weekday_string': first_and_last_weekday_string(week)})
 
 
 def authorization(request):

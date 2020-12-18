@@ -1,4 +1,4 @@
-function rewindDate(direction){
+function rewindDate(direction, period){
     let params = GETParamsAsObject()
     let date = new Date()
 
@@ -8,9 +8,9 @@ function rewindDate(direction){
     }
 
     if (direction === 'next'){
-        date = new Date(date.getTime() + 1000*60*60*24)
+        date = new Date(date.getTime() + 1000*60*60*24*period)
     } else if (direction === 'prev'){
-        date = new Date(date.getTime() - 1000*60*60*24)
+        date = new Date(date.getTime() - 1000*60*60*24*period)
     }
 
     params.date = formatDate(date)
